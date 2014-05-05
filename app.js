@@ -4,8 +4,13 @@ var favicon = require('static-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var io = require('socket.io');
+var debug = require('debug')('my-application');
 
 var routes = require('./routes/index');
+
+var Canvas = require('canvas');
+var Sketch = require('./public/javascripts/sketch');
 
 var app = express();
 
@@ -54,3 +59,32 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+
+// canvas
+var canvas = new Canvas();
+var sketch = new Sketch(canvas);
+sketch.init();
+
+// www
+app.set('port', process.env.PORT || 3000);
+
+var server = app.listen(app.get('port'), function() {
+  debug('Express server listening on port ' + server.address().port);
+});
+
+// socket.io
+var socket = io.listen(server);
+socket.on("connection", function(client) {
+  console.log("connected");
+
+  client.on("draw", function(data) {
+    client.broadcast.emit("draw", data);
+    
+    switch (data.act) {
+      case "start": sketch.startDraw(data.x, data.y); break;
+      case "move":  sketch.moveDraw(data.x, data.y); break;
+      case "end":   sketch.endDraw(data.x, data.y); break;
+    }
+  });
+});
+

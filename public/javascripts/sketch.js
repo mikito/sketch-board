@@ -1,49 +1,46 @@
 function Sketch(canvas) {
   this.canvas = canvas;  
-  this.ctx = canvas.getContext('2d');
+  this.ctx = canvas.getContext("2d");
 }
 
 Sketch.prototype =
 {
+  WIDTH : 640,
+  HEIGHT: 320,
+
   down :  false,
 
   init : function() {
-    this.ctx.fillStyle = 'rgb(0, 0, 0)';
+    this.canvas.width = this.WIDTH;
+    this.canvas.height = this.HEIGHT;
+    this.ctx.fillStyle = "rgb(0, 0, 0)";
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
-    this.ctx.strokeStyle = 'rgb(255, 255, 255)';
-    this.setEventListener();
+    this.ctx.strokeStyle = "rgb(255, 255, 255)";
   },
 
-  setEventListener : function() {
-    this.canvas.addEventListener('mousedown', this.startDraw.bind(this), false);
-    window.addEventListener('mousemove', this.moveDraw.bind(this), false);
-    window.addEventListener('mouseup', this.endDraw.bind(this), false);
-  },
-
-  startDraw : function (e) {
+  startDraw : function (x, y) {
     this.ctx.beginPath();
-    this.ctx.moveTo(e.clientX, e.clientY);
+    this.ctx.moveTo(x, y);
     this.down = true;
   },
 
-  moveDraw : function (e) {
+  moveDraw : function (x, y) {
     if(this.down == false) return;
-    this.ctx.lineTo(e.clientX, e.clientY);
+    this.ctx.lineTo(x, y);
     this.ctx.stroke();
   },
 
-  endDraw : function (e) {
+  endDraw : function (x, y) {
     if (this.down == false) return;
-    this.ctx.lineTo(e.clientX, e.clientY);
+    this.ctx.lineTo(x, y);
     this.ctx.stroke();
     this.ctx.closePath();
     this.down = false;
+    console.log("end");
   }
 }
 
-window.addEventListener('load', function(){
-  var sketch = new Sketch(document.getElementById('canvas'));
-  sketch.init();
-}, false);
-
-
+// for server
+if (typeof module != 'undefined') {
+  module.exports = Sketch;
+}
