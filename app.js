@@ -81,5 +81,10 @@ socket.on("connection", function(client) {
     client.broadcast.emit("draw", data);
     sketch.draw(data.x, data.y, data.toX, data.toY);
   });
+
+  client.on("clear", function() {
+    client.broadcast.emit("clear");
+    sketch.clear();
+  });
 });
 

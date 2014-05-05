@@ -19,6 +19,10 @@ window.addEventListener("load", function(){
     socket.on("draw", function(data) {
       sketch.draw(data.x, data.y, data.toX, data.toY);
     });
+
+    socket.on("clear", function() {
+      sketch.clear();
+    });
   });
   
   var prevX = 0,
@@ -43,5 +47,11 @@ window.addEventListener("load", function(){
   window.addEventListener("mouseup", function(e){ 
       if(down == false) return;
       down = false;
+  }, false);
+
+  var clearButton = document.getElementById("clear");
+  clearButton.addEventListener('click', function (e) {
+    sketch.clear();
+    socket.emit("clear"); 
   }, false);
 }, false);

@@ -13,9 +13,14 @@ Sketch.prototype =
   init : function() {
     this.canvas.width = this.WIDTH;
     this.canvas.height = this.HEIGHT;
-    this.ctx.fillStyle = "rgba(0, 0, 0, 0)";
-    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    this.clear();
     this.ctx.strokeStyle = "rgb(255, 255, 255)";
+  },
+
+  clear : function() {
+    this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
+    //this.ctx.fillStyle = "rgba(0, 0, 0, 0)";
+    //this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
   },
 
   setImageData : function(img) {
@@ -27,9 +32,11 @@ Sketch.prototype =
   },
 
   draw : function (x, y, toX, toY) {
+    this.ctx.beginPath();
     this.ctx.moveTo(x, y);
     this.ctx.lineTo(toX, toY);
     this.ctx.stroke();
+    this.ctx.closePath();
   }
 }
 
