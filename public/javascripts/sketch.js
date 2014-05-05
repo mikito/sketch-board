@@ -5,8 +5,8 @@ function Sketch(canvas) {
 
 Sketch.prototype =
 {
-  WIDTH : 640,
-  HEIGHT: 320,
+  WIDTH : 1440,
+  HEIGHT: 900,
 
   down :  false,
 
