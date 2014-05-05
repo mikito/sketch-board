@@ -7,7 +7,14 @@ window.addEventListener("load", function(){
 
   // Socket Event
   socket.on("connect", function() {
-    console.log("on connect");
+    socket.on('sync', function(data) {
+      var img = new Image();
+      var url = data;
+      img.onload = function() {
+        sketch.setImageData(img);
+      };
+      img.src = url;
+    });
 
     socket.on("draw", function(data) {
       switch (data.act) {

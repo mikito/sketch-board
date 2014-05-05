@@ -77,6 +77,8 @@ var socket = io.listen(server);
 socket.on("connection", function(client) {
   console.log("connected");
 
+  client.emit("sync", sketch.getImageData());
+
   client.on("draw", function(data) {
     client.broadcast.emit("draw", data);
     

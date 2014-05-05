@@ -18,6 +18,14 @@ Sketch.prototype =
     this.ctx.strokeStyle = "rgb(255, 255, 255)";
   },
 
+  setImageData : function(img) {
+    this.ctx.drawImage(img, 0, 0);
+  },
+
+  getImageData : function () {
+    return this.canvas.toDataURL();
+  },
+
   startDraw : function (x, y) {
     this.ctx.beginPath();
     this.ctx.moveTo(x, y);
