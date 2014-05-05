@@ -58,8 +58,6 @@ app.use(function(err, req, res, next) {
     });
 });
 
-module.exports = app;
-
 // canvas
 var canvas = new Canvas();
 var sketch = new Sketch(canvas);
