@@ -17,27 +17,31 @@ window.addEventListener("load", function(){
     });
 
     socket.on("draw", function(data) {
-      switch (data.act) {
-        case "start": sketch.startDraw(data.x, data.y); break;
-        case "move":  sketch.moveDraw(data.x, data.y); break;
-        case "end":   sketch.endDraw(data.x, data.y);  break;
-      }
+      sketch.draw(data.x, data.y, data.toX, data.toY);
     });
   });
   
+  var prevX = 0,
+      prevY = 0,
+      down = false;
+
   // Draw Event
   canvas.addEventListener("mousedown", function(e){
-    sketch.startDraw(e.clientX, e.clientY);
-    socket.emit("draw", { act: "start", x: e.clientX, y: e.clientY}); 
+      prevX = e.clientX;
+      prevY = e.clientY;
+      down = true;
   }, false);
 
   window.addEventListener("mousemove", function(e){
-    sketch.moveDraw(e.clientX, e.clientY);
-    if(sketch.down) socket.emit("draw", { act: "move", x: e.clientX, y: e.clientY}); 
+      if(down == false) return;
+      sketch.draw(prevX, prevY, e.clientX, e.clientY);
+      socket.emit("draw", {x: prevX, y: prevY,  toX: e.clientX, toY: e.clientY}); 
+      prevX = e.clientX;
+      prevY = e.clientY;
   }, false);
 
   window.addEventListener("mouseup", function(e){ 
-    sketch.endDraw(e.clientX, e.clientY);
-    socket.emit("draw", { act: "end", x: e.clientX, y: e.clientY}); 
+      if(down == false) return;
+      down = false;
   }, false);
 }, false);

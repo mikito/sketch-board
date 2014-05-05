@@ -79,12 +79,7 @@ socket.on("connection", function(client) {
 
   client.on("draw", function(data) {
     client.broadcast.emit("draw", data);
-    
-    switch (data.act) {
-      case "start": sketch.startDraw(data.x, data.y); break;
-      case "move":  sketch.moveDraw(data.x, data.y); break;
-      case "end":   sketch.endDraw(data.x, data.y); break;
-    }
+    sketch.draw(data.x, data.y, data.toX, data.toY);
   });
 });
 

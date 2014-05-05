@@ -26,24 +26,10 @@ Sketch.prototype =
     return this.canvas.toDataURL();
   },
 
-  startDraw : function (x, y) {
-    this.ctx.beginPath();
+  draw : function (x, y, toX, toY) {
     this.ctx.moveTo(x, y);
-    this.down = true;
-  },
-
-  moveDraw : function (x, y) {
-    if(this.down == false) return;
-    this.ctx.lineTo(x, y);
+    this.ctx.lineTo(toX, toY);
     this.ctx.stroke();
-  },
-
-  endDraw : function (x, y) {
-    if (this.down == false) return;
-    this.ctx.lineTo(x, y);
-    this.ctx.stroke();
-    this.ctx.closePath();
-    this.down = false;
   }
 }
 
