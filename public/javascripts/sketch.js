@@ -44,7 +44,6 @@ Sketch.prototype =
     this.ctx.stroke();
     this.ctx.closePath();
     this.down = false;
-    console.log("end");
   }
 }
 
