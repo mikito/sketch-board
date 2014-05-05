@@ -13,7 +13,7 @@ Sketch.prototype =
   init : function() {
     this.canvas.width = this.WIDTH;
     this.canvas.height = this.HEIGHT;
-    this.ctx.fillStyle = "rgb(0, 0, 0)";
+    this.ctx.fillStyle = "rgba(0, 0, 0, 0)";
     this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.strokeStyle = "rgb(255, 255, 255)";
   },
